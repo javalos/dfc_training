@@ -18,11 +18,14 @@ public class FolderWorker extends DctmOperation {
 	protected String executeImp() throws DfException {
 		IDfCollection results = null;
 		String response = "NO RESPONSE";
-		results = DfcUtil.executeQuery(getSession(), 
-				String.format("select * from dm_folder where object_name = '%s'", folderName));
+		results = DfcUtil.getFolderByName(getSession(), folderName);
 		if(results!=null) {
 			if(results.next()) {
-				response = "FOLDER FETCHED CORRECTLY: " + results.getString(DfcConstants.OBJECT_NAME);
+				response = "FOLDER FETCHED CORRECTLY: " +
+						"r_object_id: " + results.getString("r_object_id") + ", " +
+						"object_name: " + results.getString(DfcConstants.OBJECT_NAME) + ", " +
+						"owner_name: " + results.getString("owner_name") + ", " +
+						"r_object_type: " + results.getString("r_object_type");
 			} else {
 				response = "There is no results";
 			}

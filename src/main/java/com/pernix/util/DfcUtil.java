@@ -45,6 +45,13 @@ public class DfcUtil {
 			object.destroyAllVersions();
 	}
 
+	public static IDfCollection getFolderByName(IDfSession session, String folderName) throws DfException {
+		IDfCollection results;
+		results = executeQuery(session, 
+				String.format("select * from dm_folder where object_name = '%s'", folderName));
+		return results;
+	}
+
 	public static IDfCollection executeQuery(IDfSession session, String statement)
 			throws DfException {
 		IDfCollection results;

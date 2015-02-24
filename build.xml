@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="dfcTraining" default="build" basedir="." 
+	xmlns:artifact="antlib:org.apache.maven.artifact.ant">
+	
+	<property name="project-name" value="dfcTraining"/>
+    <property name="build.dir" location="${basedir}/target" />
+    <property name="deploy.dir" location="C:/Tomcat 6.0/webapps"/>
+    <property name="services.war" value="${build.dir}/${project-name}.war"/>
+    <property name="services.war.name" value="${project-name}"/>
+    <property name="tomcat-manager-url" value="http://localhost:8080/manager/html" />
+    <property name="tomcat-username" value="admin" />
+    <property name="password" value="fsadmin73" />
+
+    <!-- Configure the custom Ant tasks for the Manager application -->
+    <taskdef name="deploy" classname="org.apache.catalina.ant.DeployTask" />
+    <taskdef name="list" classname="org.apache.catalina.ant.ListTask" />
+    <taskdef name="reload" classname="org.apache.catalina.ant.ReloadTask" />
+    <taskdef name="start" classname="org.apache.catalina.ant.StartTask" />
+    <taskdef name="stop" classname="org.apache.catalina.ant.StopTask" />
+    <taskdef name="undeploy" classname="org.apache.catalina.ant.UndeployTask" />
+     
+    <target name="deploy" depends="undeploy" description="Install web application" >
+        <deploy url="${tomcat-manager-url}" username="${tomcat-username}" password="${password}" path="/${services.war.name}" war="${services.war}" />
+    </target>
+    
+    <target name="undeploy" description="Uninstall web application" >
+        <undeploy failonerror="no" url="${tomcat-manager-url}" username="${tomcat-username}" password="${password}" path="/${services.war.name}"/>
+    </target>
+ 
+ <!--
+    <target name="deploy-services" description="Deploy the services WAR">
+        <echo>Deploying locally</echo>
+        <copy file="${services.war}" todir="${deploy.dir}" overwrite="true" failonerror="true"/>
+    </target>
+ -->
+</project>

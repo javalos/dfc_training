@@ -1,2 +1,5 @@
+documentum
 .settings
 target
+log4j.log
+trace.log

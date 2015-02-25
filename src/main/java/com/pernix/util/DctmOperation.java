@@ -11,24 +11,22 @@ public abstract class DctmOperation {
 	protected static String REPOSITORY = "repo1";
 	private DctmConnection connection;
 	
-	protected abstract String executeImp() throws DfException;
+	protected abstract void executeImp() throws DfException;
 	
 	public DctmOperation() {
 		connection = new DctmConnection();
 	}
 	
-	public String execute() {
-		String response = "";
+	public void execute() {
 		try {
 			createSession();
-			response = executeImp();
+			executeImp();
 		} catch (DfException e) {
 			DfLogger.error(this, "Failed executing operation", null, e);
-			response = "Something wrong happened" + e.getMessage();
+			//TODO: Add error handling in response response = "Something wrong happened" + e.getMessage();
 		} finally {
 			releaseSession();
 		}
-		return response;
 	}
 
 	private void releaseSession() {

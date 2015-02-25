@@ -8,17 +8,19 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
+import com.pernix.pojos.FolderResponse;
 import com.pernix.services.workers.FolderWorker;
 
 @Path("/folder")
 public class Folder {
 	
     @GET
-    @Produces(MediaType.TEXT_PLAIN)
-    public String sayHtmlHello(
+    @Produces(MediaType.APPLICATION_XHTML_XML)
+    public FolderResponse getFolder(
     		@DefaultValue("folderName") @QueryParam("folderName") String folderName) {
-    	FolderWorker worker = new FolderWorker(folderName);
-    	String response = worker.execute();
+    	FolderResponse response = new FolderResponse();
+    	FolderWorker worker = new FolderWorker(folderName, response);
+    	worker.execute();
         return response;
     }
 }
